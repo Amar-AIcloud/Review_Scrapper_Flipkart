@@ -1,3 +1,5 @@
+# Note: Tags in the flipkart website can sometimes change. So Inspect particular tag in line 27 and 39 if the code does not give output
+
 # doing necessary imports
 from flask import Flask, render_template, request, jsonify
 import requests
@@ -34,13 +36,13 @@ def index():
             #  iterating over the comment section to get the details of customer and their comments
             for commentbox in commentboxes:
                 try:
-                    name = commentbox.div.div.find_all('p', {'class': '_2sc7ZR _2V5EHH'})[0].text
+                    name = commentbox.div.div.find_all('p', {'class': '_2sc7ZR _2V5EHH'})[0].text # Search for the Name of the Person. This name tag conatains reviews written by customers
 
                 except:
                     name = 'No Name'
 
                 try:
-                    rating = commentbox.div.div.div.div.text
+                    rating = commentbox.div.div.div.div.text # Seres of div are given to select the specific box which contains the text
 
                 except:
                     rating = 'No Rating'
@@ -54,10 +56,8 @@ def index():
                     custComment = comtag[0].div.text
                 except:
                     custComment = 'No Customer Comment'
-                # fw.write(searchString+","+name.replace(",", ":")+","+rating + "," + commentHead.replace(",", ":") + "," + custComment.replace(",", ":") + "\n")
                 mydict = {"Product": searchString, "Name": name, "Rating": rating, "CommentHead": commentHead,
                           "Comment": custComment}  # saving that detail to a dictionary
-                # x = table.insert_one(mydict) #insertig the dictionary containing the rview comments to the collection
                 reviews.append(mydict)  # appending the comments to the review list
             return render_template('results.html', reviews=reviews)  # showing the review to the user
         except:
